@@ -1,14 +1,20 @@
 import { FastifyInstance } from 'fastify';
+import { Country } from '../entities/country';
 
-export default function (fastify: FastifyInstance) {
+export function registerCountryApi(fastify: FastifyInstance) {
   fastify.get('/', async function () {
-    const client = await fastify.pg.connect();
-    try {
-      const { rows } = await client.query('SELECT * FROM cities');
+    const countryRepository = fastify.orm.getRepository(Country);
 
-      return rows;
-    } finally {
-      client.release();
+    try {
+      const countries = await countryRepository.find();
+
+      return countries;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.warn(error.message);
+        return;
+      }
+      console.warn(error);
     }
   });
 }
