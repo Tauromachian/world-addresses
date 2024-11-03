@@ -1,7 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { City } from './city';
+import { Region } from './region';
 
 @Entity()
-export class Country {
+export class SubRegion {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -10,4 +12,16 @@ export class Country {
 
   @Column()
   name!: string;
+
+  @ManyToOne(
+    () => Region,
+    (region: Region) => region.subRegions,
+  )
+  region!: Region;
+
+  @OneToMany(
+    () => City,
+    (city: City) => city.subRegion,
+  )
+  cities!: City[];
 }

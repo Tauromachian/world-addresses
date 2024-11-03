@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Region } from './region';
 
 @Entity()
 export class Country {
@@ -7,4 +8,10 @@ export class Country {
 
   @Column()
   code!: string;
+
+  @OneToMany(
+    () => Region,
+    (region: Region) => region.country,
+  )
+  regions!: Region[];
 }
