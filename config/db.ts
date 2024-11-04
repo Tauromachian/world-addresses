@@ -6,6 +6,9 @@ import dbConnection from 'typeorm-fastify-plugin';
 import 'dotenv/config';
 
 import { Country } from '../entities/country';
+import { City } from '../entities/city';
+import { Region } from '../entities/region';
+import { SubRegion } from '../entities/sub-region';
 
 export async function registerDb(fastify: FastifyInstance) {
   fastify.register(dbConnection, {
@@ -17,6 +20,6 @@ export async function registerDb(fastify: FastifyInstance) {
     database: process.env.DB_DATABASE ?? 'world',
     synchronize: true,
     logging: false,
-    entities: [Country],
+    entities: [Country, Region, SubRegion, City],
   });
 }
