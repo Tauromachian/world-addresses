@@ -1,8 +1,8 @@
 export type UploadPayload = {
   zipCode: string;
   city: string;
-  name: string;
-  code: string;
-  county: string;
-  country: string;
+  stateName: string;
+  regionCode: string;
+  subRegion: string;
+  countryCode: string;
 };
