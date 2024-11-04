@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { Country } from '../entities/country';
 
 export function registerCountryApi(fastify: FastifyInstance) {
-  fastify.get('/country', async function () {
+  fastify.get('/country', async () => {
     const countryRepository = fastify.orm.getRepository(Country);
 
     try {
