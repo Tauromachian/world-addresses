@@ -3,8 +3,7 @@ import Fastify from 'fastify';
 import process from 'node:process';
 
 import { registerDb } from './config/db';
-
-import { registerCountryApi } from './routes/countries';
+import { registerRouter } from './router';
 
 const fastify = Fastify({
   logger: true,
@@ -12,7 +11,7 @@ const fastify = Fastify({
 });
 
 registerDb(fastify);
-registerCountryApi(fastify);
+registerRouter(fastify);
 
 (async () => {
   try {
