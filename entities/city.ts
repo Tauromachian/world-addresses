@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SubRegion } from './sub-region';
 
 @Entity()
@@ -22,5 +22,9 @@ export class City {
     () => SubRegion,
     (subRegion: SubRegion) => subRegion.cities,
   )
+  @JoinColumn({ name: 'subRegionId' })
   subRegion!: SubRegion;
+
+  @Column()
+  subRegionId!: number;
 }
