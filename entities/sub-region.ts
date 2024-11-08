@@ -8,9 +8,6 @@ export class SubRegion {
   id!: number;
 
   @Column()
-  code!: string;
-
-  @Column()
   name!: string;
 
   @ManyToOne(
