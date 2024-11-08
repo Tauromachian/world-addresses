@@ -141,7 +141,7 @@ export async function makeSubRegion(
 
   const subRegionPayload: TSubRegion = {
     name: item.regionName,
-    regionId: regionId,
+    regionId,
   };
 
   const subRegion = await subRegionRepository.save(subRegionPayload);
