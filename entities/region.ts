@@ -24,4 +24,7 @@ export class Region {
     (country: Country) => country.regions,
   )
   country!: Country;
+
+  @Column()
+  countryId!: number;
 }
