@@ -1,17 +1,18 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { UploadPayload } from '../types/upload';
 
-import { Country } from '../entities/country';
-import { City } from '../entities/city';
-import { Region } from '../entities/region';
-import { SubRegion } from '../entities/sub-region';
+import { UploadPayload } from '@/types/upload';
 
-import { Country as TCountry } from '../types/country';
-import { Region as TRegion } from '../types/region';
-import { SubRegion as TSubRegion } from '../types/sub-region';
-import { City as TCity } from '../types/city';
+import { Country } from '@/entities/country';
+import { City } from '@/entities/city';
+import { Region } from '@/entities/region';
+import { SubRegion } from '@/entities/sub-region';
+
+import { Country as TCountry } from '@/types/country';
+import { Region as TRegion } from '@/types/region';
+import { SubRegion as TSubRegion } from '@/types/sub-region';
+import { City as TCity } from '@/types/city';
 import { QueryFailedError } from 'typeorm';
-import { ERROR_CODES } from '../constants/db';
+import { ERROR_CODES } from '@/constants/db';
 
 export async function index(fastify: FastifyInstance, req: FastifyRequest) {
   const countryIdsByCode: Record<string, number> = {};

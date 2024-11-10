@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { City } from '../entities/city';
+
+import { City } from '@/entities/city';
 
 export async function index(fastify: FastifyInstance) {
   const cityRepository = fastify.orm.getRepository(City);

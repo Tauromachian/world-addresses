@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 
-import * as cities from '../controllers/cities';
-import * as countries from '../controllers/countries';
-import * as upload from '../controllers/upload';
+import * as cities from '@/controllers/cities';
+import * as countries from '@/controllers/countries';
+import * as upload from '@/controllers/upload';
 
 export function registerRouter(fastify: FastifyInstance) {
   fastify.route({

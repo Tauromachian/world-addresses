@@ -3,7 +3,7 @@ import Fastify from 'fastify';
 import process from 'node:process';
 
 import { registerDb } from './config/db';
-import { registerRouter } from './router';
+import { registerRouter } from './src/router';
 
 const fastify = Fastify({
   logger: true,
