@@ -42,7 +42,7 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
 
         if (!regionId) continue;
 
-        regionIdsByCode[(uploadPayloadItem.regionCode, regionId)];
+        regionIdsByCode[uploadPayloadItem.regionCode] = regionId;
       }
 
       if (!subRegionIdsByCode[`${uploadPayloadItem.regionCode}${uploadPayloadItem.subRegion}`]) {
