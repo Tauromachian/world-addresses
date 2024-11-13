@@ -45,11 +45,12 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
         regionIdsByCode[uploadPayloadItem.regionCode] = regionId;
       }
 
-      if (!subRegionIdsByCode[`${uploadPayloadItem.regionCode}${uploadPayloadItem.subRegion}`]) {
+      const customSubRegionCode = `${uploadPayloadItem.regionCode}${uploadPayloadItem.subRegion}`;
+      subRegionId = subRegionIdsByCode[customSubRegionCode];
+      if (!subRegionId) {
         subRegionId = await makeSubRegion(uploadPayloadItem, fastify, regionId);
 
-        regionIdsByCode[`${uploadPayloadItem.regionCode}${uploadPayloadItem.subRegion}`] =
-          subRegionId;
+        subRegionIdsByCode[customSubRegionCode] = subRegionId;
       }
 
       cities.push({
