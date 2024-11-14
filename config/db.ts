@@ -9,6 +9,7 @@ import { Country } from '@/entities/country';
 import { City } from '@/entities/city';
 import { Region } from '@/entities/region';
 import { SubRegion } from '@/entities/sub-region';
+import { ZipCode } from '@/entities/zipcode';
 
 export async function registerDb(fastify: FastifyInstance) {
   fastify.register(dbConnection, {
@@ -22,6 +23,6 @@ export async function registerDb(fastify: FastifyInstance) {
     database: process.env.DB_DATABASE ?? 'world',
     synchronize: true,
     logging: false,
-    entities: [Country, Region, SubRegion, City],
+    entities: [Country, Region, SubRegion, City, ZipCode],
   });
 }
