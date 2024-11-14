@@ -8,15 +8,6 @@ export class City {
   id!: number;
 
   @Column()
-  code!: string;
-
-  @Column()
-  zipcode!: string;
-
-  @Column()
-  city!: string;
-
-  @Column()
   name!: string;
 
   @ManyToOne(
