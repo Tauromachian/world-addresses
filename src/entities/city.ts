@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { SubRegion } from './sub-region';
+import { ZipCode } from './zipcode';
 
 @Entity()
 export class City {
@@ -19,4 +20,10 @@ export class City {
 
   @Column()
   subRegionId!: number;
+
+  @OneToMany(
+    () => ZipCode,
+    (zipCode: ZipCode) => zipCode.city,
+  )
+  zipCodes!: ZipCode[];
 }
