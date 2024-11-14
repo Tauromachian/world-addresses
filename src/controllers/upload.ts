@@ -142,7 +142,7 @@ export async function makeSubRegion(
   const subRegionRepository = fastify.orm.getRepository(SubRegion);
 
   const subRegionPayload: TSubRegion = {
-    name: item.regionName,
+    name: item.subRegion,
     regionId,
   };
 
