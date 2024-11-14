@@ -18,12 +18,12 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
   const countryIdsByCode: Record<string, number> = {};
   const regionIdsByCode: Record<string, number> = {};
   const subRegionIdsByCode: Record<string, number> = {};
-
-  const cities: TCity[] = [];
+  const cityIdsByCode: Record<string, number> = {};
 
   let countryId;
   let regionId;
   let subRegionId;
+  let cityId;
 
   try {
     for (const uploadPayloadItem of req.body as UploadPayload[]) {
@@ -53,11 +53,13 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
         subRegionIdsByCode[customSubRegionCode] = subRegionId;
       }
 
-      cities.push({
-        zipcode: uploadPayloadItem.zipCode,
-        name: uploadPayloadItem.city,
-        subRegionId: subRegionId!,
-      });
+      const customCityCode = `${subRegionId}${uploadPayloadItem.city}`;
+      cityId = cityIdsByCode[customCityCode];
+      if (!cityId) {
+        cityId = await makeCity(uploadPayloadItem, fastify, subRegionId);
+
+        cityIdsByCode[customCityCode] = cityId;
+      }
     }
 
     return { msg: 'success' };
@@ -151,6 +153,23 @@ export async function makeSubRegion(
   return subRegion.id;
 }
 
-export async function addCities(cities: City[], fastify: FastifyInstance) {
-  await fastify.orm.createQueryBuilder().insert().into('City').values(cities).execute();
+export async function makeCity(
+  item: UploadPayload,
+  fastify: FastifyInstance,
+  subRegionId: number,
+): Promise<number> {
+  const cityRepository = fastify.orm.getRepository(City);
+
+  const cityPayload: TCity = {
+    name: item.city,
+    subRegionId,
+  };
+
+  const city = await cityRepository.save(cityPayload);
+
+  return city.id;
 }
+
+//export async function bulkInsertZipcodes(cities: TCity[], fastify: FastifyInstance) {
+//  await fastify.orm.createQueryBuilder().insert().into('City').values(cities).execute();
+//}
