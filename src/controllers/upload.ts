@@ -6,12 +6,16 @@ import { Country } from '@/entities/country';
 import { City } from '@/entities/city';
 import { Region } from '@/entities/region';
 import { SubRegion } from '@/entities/sub-region';
+import { ZipCode } from '@/entities/zipcode';
 
 import { Country as TCountry } from '@/types/country';
 import { Region as TRegion } from '@/types/region';
 import { SubRegion as TSubRegion } from '@/types/sub-region';
 import { City as TCity } from '@/types/city';
+import { ZipCode as TZipCode } from '@/types/zip-code';
+
 import { QueryFailedError } from 'typeorm';
+
 import { ERROR_CODES } from '@/constants/db';
 
 export async function index(fastify: FastifyInstance, req: FastifyRequest) {
@@ -24,6 +28,8 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
   let regionId;
   let subRegionId;
   let cityId;
+
+  let zipCodes: TZipCode[] = [];
 
   try {
     for (const uploadPayloadItem of req.body as UploadPayload[]) {
@@ -60,8 +66,14 @@ export async function index(fastify: FastifyInstance, req: FastifyRequest) {
 
         cityIdsByCode[customCityCode] = cityId;
       }
+
+      zipCodes.push({
+        code: uploadPayloadItem.zipCode,
+        cityId,
+      });
     }
 
+    bulkInsertZipcodes(zipCodes, fastify);
     return { msg: 'success' };
   } catch (error) {
     console.error(error);
@@ -170,6 +182,6 @@ export async function makeCity(
   return city.id;
 }
 
-//export async function bulkInsertZipcodes(cities: TCity[], fastify: FastifyInstance) {
-//  await fastify.orm.createQueryBuilder().insert().into('City').values(cities).execute();
-//}
+export async function bulkInsertZipcodes(zipCodes: TZipCode[], fastify: FastifyInstance) {
+  await fastify.orm.createQueryBuilder().insert().into(ZipCode).values(zipCodes).execute();
+}
