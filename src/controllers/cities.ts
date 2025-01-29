@@ -7,7 +7,7 @@ import { paginate, Query } from '@/utilities/pagination';
 export async function index(fastify: FastifyInstance, req: FastifyRequest<{ Querystring: Query }>) {
   const cityRepository = fastify.orm.getRepository(City);
 
-  return paginate(cityRepository, req.query);
+  return paginate(cityRepository, req.query, { searchableColumns: ['name'] });
 }
 
 export async function show(
