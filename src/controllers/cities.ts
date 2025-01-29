@@ -2,20 +2,12 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
 
 import { City } from '@/entities/city';
 
-export async function index(fastify: FastifyInstance) {
+import { paginate, Query } from '@/utilities/pagination';
+
+export async function index(fastify: FastifyInstance, req: FastifyRequest<{ Querystring: Query }>) {
   const cityRepository = fastify.orm.getRepository(City);
 
-  try {
-    const cities = await cityRepository.find();
-
-    return cities;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.warn(error.message);
-      return;
-    }
-    console.warn(error);
-  }
+  return paginate(cityRepository, req.query);
 }
 
 export async function show(

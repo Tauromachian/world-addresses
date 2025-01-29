@@ -4,11 +4,13 @@ import * as cities from '@/controllers/cities';
 import * as countries from '@/controllers/countries';
 import * as upload from '@/controllers/upload';
 
+import { Query } from '@/utilities/pagination';
+
 export function registerRouter(fastify: FastifyInstance) {
   fastify.route({
     method: 'GET',
     url: '/city',
-    handler: () => cities.index(fastify),
+    handler: (req: FastifyRequest<{ Querystring: Query }>) => cities.index(fastify, req),
   });
   fastify.route({
     method: 'GET',
